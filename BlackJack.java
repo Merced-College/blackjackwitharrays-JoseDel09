@@ -21,6 +21,8 @@ public class BlackJack {
         int dealerTotal = dealInitialDealerCards();
 
         playerTotal = playerTurn(scanner, playerTotal);
+        
+
         if (playerTotal > 21) {
             System.out.println("You busted! Dealer wins.");
             return;
@@ -72,10 +74,26 @@ public class BlackJack {
             String action = scanner.nextLine().toLowerCase();
             if (action.equals("hit")) {
                 int newCard = dealCard();
-                playerTotal += cardValue(newCard);
+                //playerTotal += cardValue(newCard);
                 System.out.println("new card index is " + newCard);
                 System.out.println("You drew a " + RANKS[newCard] + " of " + SUITS[DECK[currentCardIndex] % 4]);
+
+                //ask user if they want an ace to be a 1 or 11
+
+                if (RANKS[newCard].equals("Ace")) {
+                    System.out.println("would you like the ace to be a 1 or an 11 ?");
+                    String action2 = scanner.nextLine().toLowerCase();
+                        if (action2.equals("1")) {
+                            playerTotal = playerTotal + 1;
+                        } else if (action2.equals("11")) {
+                            playerTotal = playerTotal + 11;
+                        }
+                } else //else statement that adds the card value if not an ace
+                    playerTotal += cardValue(newCard);
+                    
+
                 if (playerTotal > 21) {
+
                     break;
                 }
             } else if (action.equals("stand")) {
@@ -107,6 +125,7 @@ public class BlackJack {
     }
 
     private static int dealCard() {
+        //return DECK[12];
         return DECK[currentCardIndex++] % 13;
     }
 
